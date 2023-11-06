@@ -1,0 +1,90 @@
+{
+  "name": "nx-mf-issues",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/nx-mf-issues/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "compiler": "babel",
+        "outputPath": "dist/apps/nx-mf-issues",
+        "index": "apps/nx-mf-issues/src/index.html",
+        "baseHref": "/",
+        "main": "apps/nx-mf-issues/src/main.tsx",
+        "tsConfig": "apps/nx-mf-issues/tsconfig.app.json",
+        "assets": [
+          "apps/nx-mf-issues/src/favicon.ico",
+          "apps/nx-mf-issues/src/assets"
+        ],
+        "styles": ["apps/nx-mf-issues/src/styles.css"],
+        "scripts": [],
+        "isolatedConfig": true,
+        "webpackConfig": "apps/nx-mf-issues/webpack.config.js"
+      },
+      "configurations": {
+        "development": {
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/nx-mf-issues/src/environments/environment.ts",
+              "with": "apps/nx-mf-issues/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/webpack:dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "nx-mf-issues:build",
+        "hmr": true
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "nx-mf-issues:build:development"
+        },
+        "production": {
+          "buildTarget": "nx-mf-issues:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/nx-mf-issues/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/nx-mf-issues/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    }
+  },
+  "tags": []
+}
