@@ -1,0 +1,33 @@
+{
+  "name": "jsremote-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/jsremote-e2e/src",
+  "targets": {
+    "e2e": {
+      "executor": "@nx/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/jsremote-e2e/cypress.config.ts",
+        "testingType": "e2e",
+        "devServerTarget": "jsremote:serve"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "jsremote:serve:production"
+        },
+        "ci": {
+          "devServerTarget": "jsremote:serve-static"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/jsremote-e2e/**/*.js"]
+      }
+    }
+  },
+  "implicitDependencies": ["jsremote"],
+  "tags": []
+}
